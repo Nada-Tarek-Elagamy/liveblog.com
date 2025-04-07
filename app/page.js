@@ -24,3 +24,9 @@ export default HomePage;
 // You can also add routing or navigation to other parts of your application.
 // Don't forget to test the sign-up and sign-in functionalities to ensure they work as expected.
 // You can also add error handling and loading states for better user experience.
+// If you have any questions or need further assistance, feel free to ask.
+// This is a simple example to get you started. You can enhance the UI and functionality as needed.
+// You can also add routing or navigation to other parts of your application.
+// Don't forget to test the sign-up and sign-in functionalities to ensure they work as expected.
+// You can also add error handling and loading states for better user experience.
+// If you have any questions or need further assistance, feel free to ask.
