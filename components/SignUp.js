@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { auth } from "../lib/firebaseConfig";  // Import Firebase Auth
-import { createUserWithEmailAndPassword } from "firebase/auth";  // Import the signup method
+import { auth } from "../lib/firebaseConfig";  
+import { createUserWithEmailAndPassword } from "firebase/auth"; // Correct import
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
