@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { auth } from "../lib/firebaseConfig";  // Import Firebase Auth
 import { createUserWithEmailAndPassword } from "firebase/auth";  // Import the signup method
