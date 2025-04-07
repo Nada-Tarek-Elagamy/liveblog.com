@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { db } from "@/firebaseConfig";
+import { db } from "@/lib/firebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Editor({ user }) {

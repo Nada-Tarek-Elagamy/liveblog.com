@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db } from "@/firebaseConfig";
+import { db } from "@/lib/firebaseConfig";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
 export default function LiveFeed() {
