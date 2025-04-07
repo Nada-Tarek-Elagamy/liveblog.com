@@ -1,15 +1,26 @@
-import SignIn from "../components/SignIn";
+"use client";
 import SignUp from "../components/SignUp";
+import SignIn from "../components/SignIn";
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1>Welcome to the Live Blog</h1>
-        {/* Choose which component to render */}
-        <SignUp />  {/* Render SignUp component */}
-        {/* <SignIn />  Uncomment to render SignIn component */}
-      </main>
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h1>Welcome to Live Blog</h1>
+      <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        <SignUp />
+        <SignIn />
+      </div>
     </div>
   );
-}
+};
+
+export default HomePage;
+// This is the main page of your application. It imports and displays the SignUp and SignIn components.
+// You can customize the layout and styling as needed.
+// The components are displayed side by side using flexbox.
+// You can also add more features or components to this page as your application grows.
+// Make sure to adjust the import paths based on your project structure.
+// This is a simple example to get you started. You can enhance the UI and functionality as needed.
+// You can also add routing or navigation to other parts of your application.
+// Don't forget to test the sign-up and sign-in functionalities to ensure they work as expected.
+// You can also add error handling and loading states for better user experience.
