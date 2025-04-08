@@ -5,8 +5,8 @@ import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth";
-console.log("Firestore instance:", db
-const q = query(collection(db "posts"));
+console.log("Firestore instance:", db);
+const q = query(collection(db,"posts"));
 import {
   collection,
   addDoc,
