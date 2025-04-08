@@ -5,6 +5,8 @@ import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth";
+console.log("Firestore instance:", db
+const q = query(collection(db "posts"));
 import {
   collection,
   addDoc,
@@ -65,7 +67,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (user) {
-      const q = query(collection(db, "posts"));
+      const q = query(collection(db, "posts");
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       });
