@@ -67,7 +67,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (user) {
-      const q = query(collection(db, "posts")); // Close the query function properly
+      const q = query(collection(db, "posts")); // Added the missing closing parenthesis
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       });
