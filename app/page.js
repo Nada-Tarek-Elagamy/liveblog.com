@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { auth, db } from "../lib/firebaseConfig";
+import { auth, db } from "../lib/firebaseConfig"; // or wherever your config is
+
+useEffect(() => {
+  console.log("DB object:", db); // This will help you debug if db is undefined or not
+}, []);
+
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, addDoc, query, onSnapshot, doc, deleteDoc, updateDoc, getDoc, getDocs, writeBatch } from "firebase/firestore";
 import SignUp from "../components/SignUp";
