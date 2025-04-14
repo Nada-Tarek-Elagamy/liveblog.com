@@ -1,12 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth, db } from "../lib/firebaseConfig";
 import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth";
-console.log("Firestore instance:", db);
-const q = query(collection(db,"posts"));
 import {
   collection,
   addDoc,
@@ -15,7 +13,9 @@ import {
   doc,
   deleteDoc,
   updateDoc,
-  getDoc // ✅ add this here
+  getDoc,
+  getDocs,
+  writeBatch
 } from "firebase/firestore";
 
 import SignUp from "../components/SignUp";
@@ -30,44 +30,30 @@ const HomePage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
 
-
+  // Watch auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
   }, []);
-  
+
+  // Check if user is admin
   useEffect(() => {
     const checkAdmin = async () => {
       if (user) {
-        const adminRef = doc(db, "admins", user.uid);
-        const adminSnap = await getDoc(adminRef);
-        if (adminSnap.exists()) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      }
-    };
-    checkAdmin();
-  }, [user]);
-  
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (user) {
-        const adminRef = doc(db, "admins", user.email); // or user.email if you saved it by email
+        const adminRef = doc(db, "admins", user.uid); // Or use user.email if stored by email
         const adminSnap = await getDoc(adminRef);
         setIsAdmin(adminSnap.exists());
       }
     };
     checkAdmin();
   }, [user]);
-  
 
+  // Fetch posts in real-time
   useEffect(() => {
     if (user) {
-      const q = query(collection(db, "posts")); // Added the missing closing parenthesis
+      const q = query(collection(db, "posts"));
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       });
@@ -107,6 +93,13 @@ const HomePage = () => {
     setEditContent("");
   };
 
+  const handleDeleteAllPosts = async () => {
+    const postsSnapshot = await getDocs(collection(db, "posts"));
+    const batch = writeBatch(db);
+    postsSnapshot.forEach((doc) => batch.delete(doc.ref));
+    await batch.commit();
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-6">Welcome to Live Blog</h1>
@@ -114,9 +107,9 @@ const HomePage = () => {
       {user ? (
         <>
           <p className="text-center mb-2 text-gray-700">
-  Logged in as: {user.email}
-  {isAdmin && <span className="ml-2 px-2 py-1 text-xs bg-yellow-500 text-white rounded">Admin</span>}
-</p>
+            Logged in as: {user.email}
+            {isAdmin && <span className="ml-2 px-2 py-1 text-xs bg-yellow-500 text-white rounded">Admin</span>}
+          </p>
 
           <div className="text-center mb-6">
             <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
@@ -188,15 +181,15 @@ const HomePage = () => {
               </div>
             ))}
             {isAdmin && (
-  <div className="mt-6 text-center">
-    <button
-      onClick={handleDeleteAllPosts}
-      className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded"
-    >
-      Delete All Posts
-    </button>
-  </div>
-)}
+              <div className="mt-6 text-center">
+                <button
+                  onClick={handleDeleteAllPosts}
+                  className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded"
+                >
+                  Delete All Posts
+                </button>
+              </div>
+            )}
           </div>
         </>
       ) : (
@@ -217,20 +210,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-// This is the main page of your application. It imports and displays the SignUp and SignIn components.
-// You can customize the layout and styling as needed.
-// The components are displayed side by side using flexbox.
-// You can also add more features or components to this page as your application grows.
-// Make sure to adjust the import paths based on your project structure.
-// This is a simple example to get you started. You can enhance the UI and functionality as needed.
-// You can also add routing or navigation to other parts of your application.
-// Don't forget to test the sign-up and sign-in functionalities to ensure they work as expected.
-// You can also add error handling and loading states for better user experience.
-// If you have any questions or need further assistance, feel free to ask.
-// This is a simple example to get you started. You can enhance the UI and functionality as needed.
-// You can also add routing or navigation to other parts of your application.
-// Don't forget to test the sign-up and sign-in functionalities to ensure they work as expected.
-// You can also add error handling and loading states for better user experience.
-// If you have any questions or need further assistance, feel free to ask.
