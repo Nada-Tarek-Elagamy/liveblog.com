@@ -1,23 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { auth, db } from "../lib/firebaseConfig";
-import {
-  onAuthStateChanged,
-  signOut
-} from "firebase/auth";
-import {
-  collection,
-  addDoc,
-  query,
-  onSnapshot,
-  doc,
-  deleteDoc,
-  updateDoc,
-  getDoc,
-  getDocs,
-  writeBatch
-} from "firebase/firestore";
-
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { collection, addDoc, query, onSnapshot, doc, deleteDoc, updateDoc, getDoc, getDocs, writeBatch } from "firebase/firestore";
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 
