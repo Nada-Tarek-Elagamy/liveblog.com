@@ -32,6 +32,8 @@ const HomePage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
 
+  // Removed duplicate handleUpdate function
+
   useEffect(() => {
     console.log("Firestore instance:", db);
   }, []);
