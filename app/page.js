@@ -32,7 +32,13 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
-  const ref = collection(db, "BlogPost");
+
+  // 🔍 Add this Firestore sanity check here
+  useEffect(() => {
+    if (!db) {
+      console.error("Firestore (db) is not initialized!");
+    }
+  }, []);
   // Removed duplicate handleUpdate function
 
   useEffect(() => {
