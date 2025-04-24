@@ -31,12 +31,10 @@ const HomePage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
 
-  // ✅ Debug db inside component
   useEffect(() => {
     console.log("Firestore instance:", db);
   }, []);
 
-  // Watch auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -44,11 +42,10 @@ const HomePage = () => {
     return () => unsubscribe();
   }, []);
 
-  // Check if user is admin
   useEffect(() => {
     const checkAdmin = async () => {
       if (user) {
-        const adminRef = doc(db, "admins", user.uid); // Or use user.email if stored by email
+        const adminRef = doc(db, "admins", user.uid);
         const adminSnap = await getDoc(adminRef);
         setIsAdmin(adminSnap.exists());
       }
@@ -56,10 +53,9 @@ const HomePage = () => {
     checkAdmin();
   }, [user]);
 
-  // Fetch posts in real-time
   useEffect(() => {
     if (user) {
-      const q = query(collection(db, "posts"));
+      const q = query(collection(db, "BlogPost"));
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       });
@@ -83,7 +79,7 @@ const HomePage = () => {
   };
 
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "posts", id));
+    await deleteDoc(doc(db, "BlogPost", id));
   };
 
   const handleEdit = (post) => {
@@ -92,7 +88,7 @@ const HomePage = () => {
   };
 
   const handleUpdate = async () => {
-    await updateDoc(doc(db, "posts", editingPost), {
+    await updateDoc(doc(db, "BlogPost", editingPost), {
       content: editContent
     });
     setEditingPost(null);
@@ -100,7 +96,7 @@ const HomePage = () => {
   };
 
   const handleDeleteAllPosts = async () => {
-    const postsSnapshot = await getDocs(collection(db, "posts"));
+    const postsSnapshot = await getDocs(collection(db, "BlogPost"));
     const batch = writeBatch(db);
     postsSnapshot.forEach((doc) => batch.delete(doc.ref));
     await batch.commit();
