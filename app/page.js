@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { auth } from "../lib/firebaseConfig";
 import { db } from "../lib/firebaseConfig";
+import { collection } from "firebase/firestore";
+
 import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth";
 import {
-  collection,
   addDoc,
   query,
   onSnapshot,
@@ -31,7 +32,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
-
+  const ref = collection(db, "BlogPost");
   // Removed duplicate handleUpdate function
 
   useEffect(() => {
