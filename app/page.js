@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { auth } from "../lib/firebaseConfig";
+import { getFirestore } from "firebase/firestore"; // Ensure this import is correct
 import { db } from "../lib/firebaseConfig";
 import { collection } from "firebase/firestore";
 
