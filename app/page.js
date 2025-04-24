@@ -65,7 +65,7 @@ const HomePage = () => {
   }, [user]);
 
   useEffect(() => {
-    if (user) {
+    if (typeof window !== "undefined" && user) {
       const q = query(collection(db, "BlogPost"));
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -73,6 +73,7 @@ const HomePage = () => {
       return () => unsubscribe();
     }
   }, [user]);
+  
 
   const handlePost = async () => {
     if (content.trim()) {
