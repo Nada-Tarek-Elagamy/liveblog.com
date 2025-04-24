@@ -55,7 +55,7 @@ const HomePage = () => {
   useEffect(() => {
     const checkAdmin = async () => {
       if (user) {
-        const adminRef = doc(db, "admins", user.uid);
+        const adminRef = doc(db, "admin", user.uid);
         const adminSnap = await getDoc(adminRef);
         setIsAdmin(adminSnap.exists());
       }
