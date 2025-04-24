@@ -69,7 +69,7 @@ const HomePage = () => {
 
   const handlePost = async () => {
     if (content.trim()) {
-      await addDoc(collection(db, "posts"), {
+      await addDoc(collection(db, "BlogPost"), {
         content,
         author: user.email,
         createdAt: new Date()
