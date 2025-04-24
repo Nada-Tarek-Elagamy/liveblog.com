@@ -33,7 +33,7 @@ const HomePage = () => {
 
   // ✅ Debug db inside component
   useEffect(() => {
-    console.log("✅ DB object:", db);
+    console.log("Firestore instance:", db);
   }, []);
 
   // Watch auth state
