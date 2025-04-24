@@ -1,13 +1,24 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { auth, db } from "../lib/firebaseConfig"; // or wherever your config is
+import { auth, db } from "../lib/firebaseConfig";
+import {
+  onAuthStateChanged,
+  signOut
+} from "firebase/auth";
+import {
+  collection,
+  addDoc,
+  query,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+  getDocs,
+  writeBatch
+} from "firebase/firestore";
 
-useEffect(() => {
-  console.log("DB object:", db); // This will help you debug if db is undefined or not
-}, []);
-
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, addDoc, query, onSnapshot, doc, deleteDoc, updateDoc, getDoc, getDocs, writeBatch } from "firebase/firestore";
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 
@@ -19,6 +30,11 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
+
+  // ✅ Debug db inside component
+  useEffect(() => {
+    console.log("✅ DB object:", db);
+  }, []);
 
   // Watch auth state
   useEffect(() => {
@@ -98,11 +114,16 @@ const HomePage = () => {
         <>
           <p className="text-center mb-2 text-gray-700">
             Logged in as: {user.email}
-            {isAdmin && <span className="ml-2 px-2 py-1 text-xs bg-yellow-500 text-white rounded">Admin</span>}
+            {isAdmin && (
+              <span className="ml-2 px-2 py-1 text-xs bg-yellow-500 text-white rounded">Admin</span>
+            )}
           </p>
 
           <div className="text-center mb-6">
-            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+            >
               Logout
             </button>
           </div>
@@ -115,7 +136,10 @@ const HomePage = () => {
               rows={4}
               className="w-full p-2 border rounded"
             />
-            <button onClick={handlePost} className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+            <button
+              onClick={handlePost}
+              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            >
               Post
             </button>
           </div>
@@ -170,6 +194,7 @@ const HomePage = () => {
                 )}
               </div>
             ))}
+
             {isAdmin && (
               <div className="mt-6 text-center">
                 <button
@@ -185,10 +210,16 @@ const HomePage = () => {
       ) : (
         <>
           <div className="text-center mb-4">
-            <button onClick={() => setShowSignUp(true)} className="bg-blue-500 text-white px-4 py-2 mr-2 rounded">
+            <button
+              onClick={() => setShowSignUp(true)}
+              className="bg-blue-500 text-white px-4 py-2 mr-2 rounded"
+            >
               Sign Up
             </button>
-            <button onClick={() => setShowSignUp(false)} className="bg-gray-500 text-white px-4 py-2 rounded">
+            <button
+              onClick={() => setShowSignUp(false)}
+              className="bg-gray-500 text-white px-4 py-2 rounded"
+            >
               Sign In
             </button>
           </div>
