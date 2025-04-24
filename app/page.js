@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { auth, db } from "../lib/firebaseConfig";
+import { auth } from "../lib/firebaseConfig";
+import { db } from "../lib/firebaseConfig";
 import {
   onAuthStateChanged,
   signOut
