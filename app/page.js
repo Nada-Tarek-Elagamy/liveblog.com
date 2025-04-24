@@ -42,7 +42,7 @@ const HomePage = () => {
   // Removed duplicate handleUpdate function
 
   useEffect(() => {
-    console.log("Firestore instance:", db);
+    console.log("db:", db);    
   }, []);
 
   useEffect(() => {
