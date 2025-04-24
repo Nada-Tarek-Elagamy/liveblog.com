@@ -1,9 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
+"use client";  
+import { useEffect, useState } from "react";  
 import { auth } from "../lib/firebaseConfig";
-import { db } from "../lib/firebaseConfig";
-import { collection } from "firebase/firestore";
+import { db } from "../lib/firebaseConfig";  
+import { collection, query, onSnapshot } from "firebase/firestore";  
 
 import {
   onAuthStateChanged,
@@ -33,6 +32,7 @@ const HomePage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
 
+  
   // 🔍 Add this Firestore sanity check here
   useEffect(() => {
     if (!db) {
@@ -238,3 +238,31 @@ const HomePage = () => {
 };
 
 export default HomePage;
+"use client";  
+import { useEffect, useState } from "react";  
+import { db } from "../lib/firebaseConfig";  
+import { collection, query, onSnapshot } from "firebase/firestore";  
+
+const HomePage = () => {  
+  const [posts, setPosts] = useState([]);  
+
+  useEffect(() => {  
+    if (db) {  
+      try {  
+        const postsRef = collection(db, "BlogPost");  
+        const q = query(postsRef);  
+        
+        const unsubscribe = onSnapshot(q, (snapshot) => {  
+          const postData = snapshot.docs.map(doc => ({  
+            id: doc.id,  
+            ...doc.data()  
+          }));  
+          setPosts(postData);  
+        });  
+
+        return () => unsubscribe();  
+      } catch (error) {  
+        console.error("Firestore error:", error);  
+      }  
+    }  
+  }, [db]); 
